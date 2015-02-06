@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+    <head>
+        <title>Less Builder</title>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/addon/hint/show-hint.css">
+        <link href="assets/css/ui.css" rel="stylesheet">
+    </head>
+ 
+	<body>
+        
+		<script type="text/template" id="app-filter">
+			<div id="hybridFilters" class="panel-filter panel-collapse collapse">
+				<div class="smallwindow hybrid-show-block">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-xs-6 control-label" for="dropdownPageListOptions">View:</label>
+							<div class="col-xs-6">
+								<select class="form-control select-save" id="dropdownPageListOptions">
+									<option value="All">All</option>
+									<option value="Enabled">Enabled</option>
+									<option value="Disabled">Disabled</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="footerbuttons">
+					<input type="submit" value="Apply Filters" id="apply-filters" class="basic-button small-button call-to-action">
+					<input type="button" class="basic-button small-button" id="reset-filters" value="Reset to Default">
+				</div>
+			</div>
+		</script>        
+        
+        <div id="container-app">
+            <ul id="hybridSubmenu"></ul>
+            <div id="container-body" class="container"></div>
+        </div>
+        
+        
+        <script type="text/template" class="app-layout" data-name="Editor" data-class="pin"  data-level="0" data-script="runEditor" data-collection="variables">
+            
+            <div class="alert alert-danger error-message" style="display:none" role="alert"></div>
+			
+            <form id="item-form" class="form-horizontal" role="form">
+                
+				<h2 class="form-header"><span class="hybridFormTitlewrap">CSS/LESS Editor</span></h2>
+                <div class="help-block">
+				<p>Press ctrl-space for quick access to custom variables.</p>
+				</div>
+                <div class="form-group">
+                    <textarea name="code-editor" id="code-editor" class="input-save"></textarea>
+                </div>
+            </form>
+        </script>
+        
+        
+        <script type="text/template" class="app-layout" data-name="Variables" data-script="runVariablesList" data-collection="variables" data-level="0">
+			
+				<div class="table-container">
+				<div id="hybridButtonPanel">
+					<div id="hybridButtons">
+						<a class="btn-add-item basic-button small-button" data-collection="variables" data-details="2">Add Variable</a>
+					</div>
+				</div>
+		
+				<div class="norecord">You don't have any items. Please add one.</div>
+               
+                <div class="main">
+                    <table cellspacing="0" class="table table-striped table-lower" data-table-template="variables-table-layout" data-filter="all" data-collection="variables" data-details="2">
+                        <colgroup>
+                            <col style="width:10px">
+                            <col style="width:30%">
+                            <col style="width:44%">
+                            <col style="width:20%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="all-items-selection"></th>
+                                <th>Name</th>
+                                <th>Value</th>
+                                <th>Creation Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-rows"></tbody>
+                    </table>
+                    <div id="lowerButtons">
+                        <a class="btn-delete-selected basic-button small-button">Delete Selected</a>
+                    </div>
+                </div>
+			</div>
+            
+        </script>
+        
+		<script type="text/template" id="variables-table-layout">
+            <span class="anchor"></span>
+			<% _.each(list.toJSON(),function(modelInfo){ %>
+                <tr>
+					<td><input type="checkbox" name="cb-<%-modelInfo['id']%>" data-id="<%-modelInfo['id']%>" id="cb-<%-modelInfo['id']%>" class="item-selection"></td>
+					<td><a href="#<%print(viewID);%>/<%-modelInfo['id']%>/<%-modelInfo['level']%>" title="<%-modelInfo['input-variable-name']%>" class="input-name"><span>@<%-modelInfo['input-variable-name']%></span></a></td>
+					<td><a href="#<%print(viewID);%>/<%-modelInfo['id']%>/<%-modelInfo['level']%>" title="<%-modelInfo['input-variable-value']%>" class="input-value"><span><%-modelInfo['input-variable-value']%></span></a></td>
+					<td><span><%-modelInfo['date']%></span></td>
+					<td style="width:100px;"><a href="#<%print(viewID);%>/<%-modelInfo['id']%>/<%-modelInfo['level']%>"> Edit</a></td>
+				</tr>
+            <%});%>
+		</script>
+        
+        
+        <script type="text/template" class="app-layout" data-name="Details" data-script="runVariablesDetails" data-collection="variables" data-level="1">
+		
+			<p class="breadcrumb"><a href="#0/0/0">Back</a></p>
+                
+            <div class="alert alert-danger error-message" style="display:none" role="alert"></div>
+			
+				<form id="item-form" class="form-horizontal" role="form">
+					
+					<h2 class="form-header"><span class="hybridFormTitlewrap">Variable Details</span></h2>
+					<div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="input-variable-name">Name:</label>
+						<div class="col-xs-5 col-md-4 input-group">
+                            <span class="input-group-addon">@</span>
+							<input name="input-variable-name" type="text" id="input-variable-name" class="form-control" value="<%-json['input-variable-name']%>">
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title="The variable name is required, shouldn't have any spaces, and when using more than one word hyphens are considered best practice. (e.g. @primary-color)"></span>
+						</div>
+					</div>
+                            
+                    <div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="input-variable-value">Value:</label>
+						<div class="col-xs-5 col-md-4">
+							<input name="input-variable-value" type="text" id="input-variable-value" class="form-control" value="<%-json['input-variable-value']%>">
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title="The value is required, can be a color, number, less function, and much more. Get more information at lesscss.org."></span>
+						</div>
+					</div>
+					
+				</form>
+        </script> 
+        
+        
+		<script type="text/template" class="app-layout" data-name="Help" data-pull="right" data-icon="question-sign" data-script="runInstructions"  data-class="pin"  data-level="0" >
+		
+				
+				<h2 class="form-header">
+					<span class="hybridFormTitlewrap">CSS Builder v0.3.0</span>
+				</h2>
+				
+				<p>To get the most of this app, consider learning the popular CSS preprocessor Less. Get more information at <a href="http://lesscss.org/features/" target="_blank">lesscss.org</a>.</p>
+            
+                <p>Speed up your development, and decrease the size of your CSS files with the CSS Builder app. CSS Builder converts LESS into CSS and then minimizes the CSS. Decreasing the file size improves page load time, which is good for site visitors and search engines.</p>
+				
+                <h2 class="form-header">
+					<span class="hybridFormTitlewrap">CSS/LESS Editor</span>
+				</h2>
+                    
+                <p>The code editor is where you add CSS/LESS. When you attempt to publish your code, CSS Builder will check for errors. If any mistakes are found, the code will not be saved nor published, and an error message will show at the top of the page. You will need to fix the error before saving and publishing.</p>
+                
+                <p>You have easy access to your custom variables directly in the editor. To add a variable to the editor, put the cursor where you’d like the variable, and press ctrl-space (control key and spacebar at the same time).</p>
+                
+				<h2 class="form-header">
+					<span class="hybridFormTitlewrap">Variables</span>
+				</h2>
+
+                <p>Variables allow you to easily reuse code. To create a custom variable to be used in the code editor, select the 'variables' tab. To add a new variable click the 'Add Variable' button. To edit an existing variable click one of the links in the variable item's table row.</p>
+                
+                <p>Each variable requires a name. There shouldn’t be any spaces. It's good practice to use hyphens.</p>
+                
+                <p>Each variable requires a value. The value can be used to control values in CSS rules, but they can also be used in other places as well, such as selector names, property names, URLs and @import statements.</p>
+                
+                <p><b>Examples:</b></p>
+                
+                <ul>
+                    <li><b>Name:</b> <code>@link-color</code><br><b>Value:</b> <code>#428bca</code></li>
+                    <li><b>Name:</b> <code>@link-color-hover</code><br><b>Value:</b> <code>darken(@link-color, 10%)</code></li>
+                    <li><b>Name:</b> <code>@images</code><br><b>Value:</b> <code>"../img"</code></li>
+                    <li><b>Name:</b> <code>@content</code><br><b>Value</b> <code>"This is my content."</code></li>
+                </ul>
+			
+		</script>
+        
+        <script type="text/template" class="app-layout" data-name="Settings" data-model="roleSettings" data-pull="right" data-icon="cog" data-script="runSettings"  data-class="pin"  data-level="0" >
+
+				<form class="form-horizontal" role="form">
+				
+					<h2 class="form-header"><span class="hybridFormTitlewrap">Menu Item</span></h2>
+    				<div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="select-roles">Show to:</label>
+						<div class="col-sm-5 col-md-4">
+							<select class="form-control select-save" data-system="roles" data-group="option" id="select-system-roles">
+							<option>All Roles</option>
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title="This app's menu item will be hidden from all roles not selected."></span>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="input-title">Title:</label>
+						<div class="col-xs-5 col-md-4">
+							<input id="input-title" type="text" class="form-control input-save">
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title="Change this app's menu item title."></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="input-parent-id">Parent Name:</label>
+						<div class="col-xs-5 col-md-4">
+							<input id="input-parent-id" type="text" class="form-control input-save">
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title="To move this app's menu item to a subcategory of another menu item (parent), enter the parent's title (e.g., Site Manager). If moving to a custom menu item enter the parent's id (e.g., menu-custom-item)"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="input-weight">Order:</label>
+						<div class="col-xs-5 col-md-4">
+							<input id="input-weight" type="text" class="form-control input-save">
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title="To move this app's menu item below another item, enter the other menu item's title (e.g., E-Mail Campaign). You may also use a weight (1 is top)."></span>
+						</div>
+					</div>
+				</form>
+                            
+                            
+                            
+                <form class="form-horizontal" role="form">
+				
+					<h2 class="form-header"><span class="hybridFormTitlewrap">CSS Options</span></h2>
+					
+					<div class="form-group">
+						<label class="col-xs-3 col-md-2 control-label" for="input-css-url">URL:</label>
+						<div class="col-xs-5 col-md-4">
+							<input id="input-css-url" type="text" class="form-control input-save">
+						</div>
+						<div class="col-xs-4">
+							<span class="glyphicon glyphicon-question-sign app-question" data-toggle="tooltip" data-placement="right" title=""></span>
+						</div>
+					</div>
+                            
+				</form>
+                            
+					
+				<h2 class="formSubheader" data-toggle="collapse" data-target="#app-delete">
+					<span class="hybridFormTitlewrap">Delete App</span>
+				</h2>
+			
+				<div class="collapse" id="app-delete">
+					
+					<p>If you no longer need this app, you can delete it by using the Delete App button below. This action will remove the app from your site.</p>
+					
+					<div class="deleteWarning">
+						Please take note that there is no undo for this operation.
+					</div>
+					
+					<div id="hybridButtons">
+						<a id="delete-app-modal-button" class="basic-button small-button large-button">Delete App</a>
+					</div>
+				</div>	
+		</script>
+        
+        <script type="text/template" id="new-app-menu-template">            
+              "menu-bcas-apps": {
+                "weight": 600000,
+                "icon": "/_System/Apps/<%=appKey%>/_config/icon.png",
+                "title": "Apps"
+              },        
+			  "menu-bcas-<%=appKey%>": {
+				  "weight": 20,
+				  "title": "<%=appName%>",
+				  "parent": "menu-bcas-apps",
+				  "attr": {
+					  "href": "/Admin/AppLoader.aspx?client_id=<%=appKey%>"
+				  }
+			  }
+		</script>
+
+        
+        <div id="modalContainer"></div>
+        
+        <div id="delete-app-modal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">Delete App</h3>
+              </div>
+              <div class="modal-body">
+                <p>Please take note that there is no undo for this operation.</p>
+              </div>
+              <div class="modal-footer">
+                    <div id="hybridButtons">
+                        <a id="delete-app-button" class="basic-button large-button call-to-action">Delete App</a>
+                        <a class="basic-button large-button" data-dismiss="modal">Cancel</a>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div id="destroyed-app-modal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">App Deleted</h3>
+              </div>
+              <div class="modal-body">
+                <p>Your app has been deleted from this site.</p>
+              </div>
+              <div class="modal-footer">
+                    <div id="hybridButtons">
+                        <a id="delete-app-continue-button" class="basic-button large-button">Continue</a>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+            
+            </div>
+    	</div>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.4/less.min.js"></script>
+        <script src="assets/js/bundle.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/addon/hint/show-hint.js"></script>
+       <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/addon/hint/css-hint.js"></script>
+        <script src="assets/js/codemirror-css.js"></script>
+        <script>
+            less.env = "development";
+            less.errorReporting = "function";
+        </script>
+
+
+</body>
+</html>

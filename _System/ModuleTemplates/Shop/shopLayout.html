@@ -1,0 +1,23 @@
+<div class="shop-main">
+	<div class="shop-breadcrumb">
+		{module_catalogBreadcrumb template="/_System/ModuleTemplates/Shop/catalogBreadcrumb.html" catalogId="{{catalog.id}}"}
+	</div>
+    <hr/>
+	<div class="shop-cartsummary">
+		{% include "/_System/ModuleTemplates/Shop/cartSummary.html" %}
+	</div>
+    <hr/>
+	<h3>Catalog: {{catalog.name}}</h3>
+	<div class="shop-content">
+		{module_catalogList template="/_System/ModuleTemplates/Shop/catalogList.html" parentCatalogId="{{catalog.id}}" sortBy="weighting desc" itemsPerPage="12"}
+		{% if product %}
+			<!-- if we are viewing a product, display the product detail-->
+			{module_product template="/_System/ModuleTemplates/Shop/productLarge.html" catalogId="{{catalog.id}}" productId="{{product.id}}"}
+		{% else %}
+            <hr/>
+            {% include "/_System/ModuleTemplates/Shop/catalogBrowsePanel.html" %}
+			<!-- if we are viewing a catalog, display its products -->
+			{module_productList template="/_System/ModuleTemplates/Shop/productList.html" catalogId="{{catalog.id}}" sortBy="weighting desc" itemsPerPage="12" onSale="{{Get.onSale | default:""}}" price="between({{Get.priceFrom | default:""}},{{Get.priceTo | default:""}})"}
+		{% endif %}
+	</div>
+</div>

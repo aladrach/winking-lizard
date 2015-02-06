@@ -1,0 +1,76 @@
+{% section name="head"%}
+
+<link type="text/css" href="/CatalystStyles/lightbox.css" rel="StyleSheet" />
+<script type="text/javascript" src="/CatalystScripts/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/CatalystScripts/Cache/lightbox2022.js"></script>
+
+<script type="text/javascript" src="/CatalystScripts/ValidationFunctions.js"></script>
+<script type="text/javascript">   //<![CDATA[
+	function checkWholeForm2343(theForm){var why = "";if (theForm.EmailAddress) if (theForm.EmailAddress.value.length > 0) why += checkEmail(theForm.EmailAddress.value);if (theForm.CaptchaV2) why += isEmpty(theForm.CaptchaV2.value, "Enter Word Verification in box below");if (why != ""){alert(why);return false;}theForm.submit();return false;}
+//]]></script>
+
+
+<script type="text/javascript" src="/CatalystScripts/onlineShop.js"></script>
+<script type="text/javascript"><!--
+function onSuccess(results) {
+    Cart.onSuccess(results);
+}
+function onError(results) {
+    Cart.onError(results);
+}
+--></script>
+
+{% endsection %}
+
+<div class="shop-productLarge">
+    <div class="shop-productLargeDetails">
+    <h1><a href="{{product.url}}">{{product.name}}</a></h1>
+    <ul class="shop-productLargeAttributes">
+        <li><strong>{{product.price}}</strong></li>
+        <li>In stock: <strong>{{product.stock}}</strong></li>
+        <li>
+            <input id="qty_{{product.id}}" class="shop-productTextInput" name="qty_{{product.id}}" type="text" value="{{product.minUnits}}"/>
+            <img src="/CatalystImages/shop_addtocart.png" onclick="Cart.AddToCart('{{product.id}}', '{{product.catalogId}}', 'qty_{{product.id}}',onSuccess, onError);"/>
+        </li>
+    </ul>
+    	<div class="shop-productLargeDescription">{{product.description | htmlDecode}}</div>
+    </div>
+
+    <div class="shop-imageContainer">
+    	<a href="{{product.url}}">
+        	<img id="catlproduct_{{product.id}}" src="{{product.largeImage}}" alt="{{product.name}}" border="0"/>
+        </a>
+        <div class="shop-productLargeThumbnailsContainer">
+            <ul class="shop-productLargeThumbnails">
+            {% for thumbnail in product.thumbnails %}
+                <li style="float:left;width:110px;">
+                    <a onclick="myLightbox.start(this); return false;" rel="lightbox[{{product.id}}]" href="{{thumbnail.imageUrl}}">
+                        <img id="catpproduct{{forloop.index}}" src="{{thumbnail.imageUrl}}?action=resize&amp;width=65&amp;height=65" style="cursor:pointer;" alt="{{product.name}}" border="0" />
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="shop-CommentFormContainer">
+<h5>Comment</h5>
+<form action="/RatingProcess.aspx?OID={module_oid}&amp;OTYPE={module_otype}" method="post" onsubmit="return checkWholeForm2343(this)" name="catratingform2343">
+    <div class="form">
+    <div class="item">   <label>Was this helpful?</label><br />
+    No   <input type="radio" value="1" name="Rating" />   <input type="radio" value="2" name="Rating" />   <input type="radio" value="3" checked="checked" name="Rating" />   <input type="radio" value="4" name="Rating" />   <input type="radio" value="5" name="Rating" />   Very   </div>
+    <div class="item">   <label>Name (optional)</label><br />
+    <input type="text" maxlength="255" name="FullName" class="cat_textbox_small" />   </div>
+    <div class="item">   <label>Website (optional)</label><br />
+    <input type="text" maxlength="255" name="Website" class="cat_textbox_small" />   </div>
+    <div class="item">   <label>Email Address (optional)</label><br />
+    <input type="text" maxlength="255" name="EmailAddress" class="cat_textbox_small" />   </div>
+    <div class="item">   <label>Enter Word Verification in box below</label><br />
+    {module_captchav2}   </div>
+    <div class="item">   <label>Comment (optional)</label><br />
+    <textarea name="Feedback" class="cat_listbox_small"></textarea>   </div>
+    <div class="item">   <input type="submit" value="Submit" class="cat_button" />   </div>
+    </div>
+</form>
+</div>

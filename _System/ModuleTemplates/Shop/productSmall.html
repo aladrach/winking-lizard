@@ -1,0 +1,30 @@
+{% section name="head" %}
+<script type="text/javascript" src="/CatalystScripts/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="/CatalystScripts/onlineShop.js"></script>
+
+<script type="text/javascript"><!--
+function onSuccess(results) {
+    Cart.onSuccess(results);
+}
+function onError(results) {
+    Cart.onError(results);
+}
+--></script>
+{% endsection %}
+
+<div class="shop-productSmall">
+<h5><a href="{{product.url}}">{{product.name}}</a></h5>
+    <div class="shop-imageContainer">
+    <a href="{{product.url}}">
+	    <img alt="{{product.name}}" src="{{product.smallImage}}" style="border-width: 0px; border-style: solid;" />
+    </a>
+</div>
+    <ul class="shop-productSmallAtttributes">
+	<li>Price: <strong>{{product.price}}</strong></li>
+	<li>In Stock: <strong>{{product.stock}}</strong></li>
+    <li>
+            <input id="qty_{{product.id}}" class="shop-productTextInput" name="qty_{{product.id}}" type="text" value="{{product.minUnits}}"/>
+    	<img onclick="Cart.AddToCart('{{product.id}}', '{{product.catalogId}}', 'qty_{{product.id}}',onSuccess, onError);" src="/CatalystImages/shop_addtocart.png"/>
+    </li>
+</ul>
+</div>

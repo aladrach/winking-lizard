@@ -1,0 +1,102 @@
+<header>
+    <section class="utility-nav">
+        <div class="row collapse">
+            <div class="medium-12 large-8 columns small-centered">
+                <div class="row">
+                    <div class="medium-2 columns">
+                        <a href="/" class="logo"><img src="img/logo.png">
+                        </a>
+                    </div>
+                    <div class="medium-10 columns">
+                        <div class="row">
+                            <div class="medium-12 large-7 columns">
+                                <ul class="right">
+                                    <li><a href=""><span class="fa fa-phone"></span>303 555 5555</a>
+                                    </li>
+                                    <li style="display:block;" class="uty0"><a href="/users/account"><span class="fa fa-user"></span> Login</a>
+                                    </li>
+                                    <li style="display:block;" class="uty0"><a href="/users/join">Create Account</a>
+                                    </li>
+                                    <li class="uty1"><a href="/users/account">My Account</a>
+                                    </li>
+                                    <li class="uty1"><a href="/LogOutProcess.aspx">Sign Out</a>
+                                    </li>
+                                    <div class="shopping-cart">
+                                        <table cellspacing="0" class="cartSummaryTable">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="cartSummaryItem"><span class="fa fa-shopping-cart"></span> Shopping cart is empty</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </ul>
+                            </div>
+                            <div class="medium-12 large-5 columns">
+                                <div class="search right">
+                                    <form action="/Default.aspx?SiteSearchID=3206&amp;PageID=15772897" method="post" name="catsearchform82408">
+                                        <div class="search-wrap">
+                                            <input type="text" class="cat_textbox_small" name="CAT_Search" id="CAT_Search" placeholder="Search the site...">
+                                            <input type="submit" class="button small" value="Search">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main-hero">
+        {% if globals.get.ID contains "/" or globals.get.ID > 0 or globals.get.CatalogueID > 0 or globals.get.Type > 0 or globals.get.OID > 0 %}
+        {% if heroImg == 1 %}
+        <div class="hero-container"> <img src="/img/heros/hero{{globals.get.ID | convert: "string" | replace: "/", "-" | remove: ".html"}}.jpg"> </div>
+        {% endif %}
+        {% else %}
+        <div class="hero-slider slider">
+            <div class="slide"> <img src="img/slide-1.jpg"> </div>
+            <!--end slide-->
+            <div class="slide"> <img src="img/slide-2.jpg"> </div>
+            <!--end slide-->
+            <div class="slide"> <img src="img/slide-3.jpg"> </div>
+            <!--end slide-->
+            
+        </div>
+        {% endif %}
+        <div class="row collapse main-navigation">
+            <div class="medium-12 large-8 columns small-centered">
+                <div class="row">
+                    <div class="medium-2 columns">
+                        
+                    </div>
+                    <div class="medium-10 columns">
+                        <nav>
+                            <ul id="menu">
+                                <li><a href="index.html">Home</a> </li>
+                                <li><a href="locations.html">Locations</a> </li>
+                                <li><a href="food.html">Food</a> </li>
+                                <li><a href="beer.html">Beer</a> </li>
+                                <li><a href="features.html">Features</a>
+                                    <ul>
+                                        <li><a href="">Store</a> </li>
+                                        <li><a href="">Blog</a> </li>
+                                        <li><a href="">News</a> </li>
+                                        <li><a href="">FAQs</a> </li>
+                                        <li><a href="">Forum</a> </li>
+                                        <li><a href="">Media Downloads</a> </li>
+                                        <li><a href="">Gallery</a> </li>
+                                        <li><a href="">Events</a> </li>
+                                        <li><a href="">One Column</a> </li>
+                                        <li><a href="">Two Columns</a> </li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">Contact</a> </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</header>

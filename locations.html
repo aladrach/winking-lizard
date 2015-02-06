@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Locations</title>
+    {% assign heroImagePath = '/img/heroes/locations.jpg' %}
+</head>
+
+<body>
+    <form name="catcustomcontentform69551" method="post" onsubmit="return checkWholeForm69551(this)" action="/Default.aspx?CCID=24323&FID=180964&ExcludeBoolFalse=True&PageID={module_oid}">
+        <div class="row">
+            <div class="medium-6 columns">
+                <label for="Postcode_24323">Search by Zipcode</label>
+                <br />
+                <input type="text" maxlength="255" name="Postcode_24323" id="Postcode_24323" class="cat_textbox" />
+            </div>
+            <div class="medium-6 columns">
+                <input type="hidden" id="Country_24323" name="Country_24323" value="US" />
+                <label for="Distance_24323">Distance</label>
+                <br />
+                <select name="Distance_24323" id="Distance_24323" class="cat_dropdown">
+                    <option value="5">5 miles</option>
+                    <option value="10">10 miles</option>
+                    <option value="20">20 miles</option>
+                    <option value="50" selected="selected">50 miles</option>
+                    <option value="100">100 miles</option>
+                </select>
+
+                <input class="cat_button" type="submit" value="Search" />
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript" src="/CatalystScripts/ValidationFunctions.js?vs=b1531.r448624-phase1"></script>
+    <script type="text/javascript">
+    function checkWholeForm69551(theForm) {
+        var why = "";
+        if (why != "") {
+            alert(why);
+            return false;
+        }
+        return true;
+    }
+    </script>
+    <script type="text/javascript" src="/CatalystScripts/ValidationFunctions.js?vs=b1531.r448624-phase1"></script>
+    <script type="text/javascript">
+    function checkWholeForm97223(theForm) {
+        var why = "";
+        if (why != "") {
+            alert(why);
+            return false;
+        }
+        return true;
+    }
+    </script>
+    {% if globals.get.PageID | format: "size" > 0 %} {module_webappsresultsmap}
+    <ul class="medium-block-grid-3">
+        {module_webappsresults id="Locations" filter="all" resultsPerPage="200" collection="locations" render="collection" template=""} {% for item in locations.items %}
+        <li>
+            <h4>{{item.counter}} - {{item.name}}  </h4> {{item.address1}}
+            <br> {{item.city}}, {{item.state}} {{item.zipcode}}
+            <p>{{item.Hours}}</p>
+            <a href="{{item.url}}" class="button">Store info</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %} {module_webappsmap id="Locations" filter="all"}
+    <ul class="medium-block-grid-3">
+        {module_webapps id="Locations" filter="all" resultsPerPage="200" collection="locations" render="collection" template=""} {% for item in locations.items %}
+        <li>
+            <h4>{{item.name}}  </h4> {{item.address1}}
+            <br> {{item.city}}, {{item.state}} {{item.zipcode}}
+            <p>{{item.Hours}}</p>
+            <a href="{{item.url}}" class="button">Store info</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+
+</html>

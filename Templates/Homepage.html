@@ -1,0 +1,30 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    {% assign homePage = true %}
+    <head>
+        <title>Winking Lizard</title>
+        {%include "/_settings/_siteComponents/head.tpl"%}
+    </head>
+    
+    <body>
+        <div class="main-container">
+            {%include "/_settings/_siteComponents/header.tpl"%}
+
+            
+            <section class="page-content">
+                <div class="row">
+                    <div class="medium-12 large-8 columns small-centered">
+                        <h2 class="headlines"><span><em>{module_pagetitle}</em></span></h2>
+                        {tag_pagecontent}
+                    </div>
+                </div>
+            </section>
+
+            {%include "/_settings/_siteComponents/footer.tpl"%}
+            
+        </div>
+        {%include "/_settings/_siteComponents/footer-scripts.tpl"%}
+        
+    </body>
+    
+</html>

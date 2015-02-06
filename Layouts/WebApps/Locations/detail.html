@@ -1,0 +1,324 @@
+{% capture heroImagePath %}{{this.['Hero Image']}}{% endcapture %}
+
+<section class="page-content">
+    <div class="row">
+        <div class="medium-12 large-8 columns small-centered">
+            <div class="medium-6 columns">
+                <h2 class="headlines"><em>{{this.name}} Location</em></h2>
+                <h4 class="banner">Contact Info</h4>
+                {{this.address1}},<br>
+                {{this.city}}, {{this.state}} {{this.zipcode}}<br>
+                <strong>{{this.['Phone Number']}}</strong>
+                <h4 class="banner">Our Hours</h4>
+            {{this.Hours | replace: "<br />    <br />", "<br />" | replace: "<br /><p>", "<p>"}}
+            </div>
+            <div class="medium-6 columns">
+                <iframe
+                  width="100%"
+                  height="400"
+                  frameborder="0" style="border:0"
+                  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCuNdWwdyC5VgqJlmAL-DRuFtMS81aB3uk
+                &q=Winking+Lizard,+{{this.address1}},{{this.city}},+{{this.state}}+{{this.zipcode}}">
+            </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="trans-cta">
+    <div class="row">
+        <div class="medium-12 large-8 columns small-centered">
+             <h2 class="headlines dark"><span><em>Food, Drinks, & Specials</em> at {{this.name}}</span></h2>
+            <div class='tabs'>
+                <ul class="tabs-list">
+                    <li><a href="#regular-menu">Regular Menu</a></li>
+                    <li><a href="#special-menu">Seasonal Menu</a></li>
+                    <li><a href="#daily-specials">Daily Specials</a></li>
+                    <li><a href="#draft-list">Great Big Draft List</a></li>
+                    <li><a href="#bottle-list">Bottle List</a></li>
+                    <li><a href="#specialty-beers">Specialty Beers</a></li>
+                    <li><a href="#beer-cocktails">Beer Cocktails</a></li>
+                    <li><a href="#takeout-menu">Take-Out Menu</a></li>
+                    <li><a href="#placemat">The Placemat</a></li>
+                </ul>
+                <div id='regular-menu'>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862416"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Appetizers" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="appetizers" render="collection" template=""}
+                        {% for item in appetizers.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862418"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Barbecue & Grill" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="barbecue" render="collection" template=""}
+                        {% for item in barbecue.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862420"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Burgers" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="burgers" render="collection" template=""}
+                        {% for item in burgers.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862421"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Chicken Sandwiches" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="chicken" render="collection" template=""}
+                        {% for item in chicken.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862426"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Melt Sandwiches" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="melt" render="collection" template=""}
+                        {% for item in melt.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862430"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Sandwiches" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="sandwiches" render="collection" template=""}
+                        {% for item in sandwiches.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862434"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Soups" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="soups" render="collection" template=""}
+                        {% for item in soups.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862436"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Wings" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="wings" render="collection" template=""}
+                        {% for item in wings.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862438"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Wraps" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="wraps" render="collection" template=""}
+                        {% for item in wraps.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862432"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Sides" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="sides" render="collection" template=""}
+                        {% for item in sides.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {module_webapps id="Menu Description Management" filter="item" itemId="4862419"}
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Beverages" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="beverages" render="collection" template=""}
+                        {% for item in beverages.items %}
+                        <li>
+                            {% if item.['Item Image'] == '' %}{% else %}
+                            <div class="round-image" style="float: left; margin-right: 10px;"><img src="{{item.['Item Image']}}?Action=thumbnail&Width=80&Height=80&algorithm=fill_proportional"></div>
+                            {% endif %}
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']  | truncate: 75,'...'}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id='special-menu'>Tab 2 content</div>
+                <div id='daily-specials'>
+                    <a href="http://winkinglizard.bluefootsnapsites.com{{this.['Daily Specials']}}" class="embed button" target="_blank">Download Daily Specials PDF</a>
+                </div>
+                <div id='draft-list'>
+                	<h4>Great Big Draft List</h4>
+                    
+                	<ul class="medium-block-grid-5 menu-list">
+                        {module_webapps id="Draft List" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="drafts" render="collection" template=""}
+                        {% for item in drafts.items %}
+                        <li>
+                                <div class="card">
+                                    <div class="front">
+                                        <img src="{{item.['Label Image']}}">
+                                    </div>
+                                    <div class="back">
+                                        <h2 class="stats">Beer Stats</h2>
+                                        <p>ABV: {{item.ABV}}</p>
+                                        <p>{{item.['Short Description']}}</p>
+                                    </div>
+                                </div>
+                            <h4>{{item.name}}</h4>
+                            <span class="company">{{item.['Brewing Company']}}</span>
+                         </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id='bottle-list'>
+                	<h4>Bottle List</h4>
+                    
+                	<ul class="medium-block-grid-5 menu-list">
+                        {module_webapps id="Bottle List" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="bottles" render="collection" template=""}
+                        {% for item in bottles.items %}
+                        <li>
+                                <div class="card">
+                                    <div class="front">
+                                        <img src="{{item.['Label Image']}}">
+                                    </div>
+                                    <div class="back">
+                                        <h2 class="stats">Beer Stats</h2>
+                                        <p>ABV: {{item.ABV}}</p>
+                                        <p>{{item.['Short Description']}}</p>
+                                    </div>
+                                </div>
+                            <h4>{{item.name}}</h4>
+                            <span class="company">{{item.['Brewing Company']}}</span>
+                         </li>
+                        {% endfor %}
+                    </ul>
+                
+                </div>
+                <div id='specialty-beers'>
+                	<h4>Specialty Beers</h4>
+                    
+                	<ul class="medium-block-grid-5 menu-list">
+                        {module_webapps id="Specialty Beers" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="specialbeers" render="collection" template=""}
+                        {% for item in specialbeers.items %}
+                        <li>
+                                <div class="card">
+                                    <div class="front">
+                                        <img src="{{item.['Label Image']}}">
+                                    </div>
+                                    <div class="back">
+                                        <h2 class="stats">Beer Stats</h2>
+                                        <p>ABV: {{item.ABV}}</p>
+                                        <p>{{item.['Short Description']}}</p>
+                                    </div>
+                                </div>
+                            <h4>{{item.name}}</h4>
+                            <span class="company">{{item.['Brewing Company']}}</span>
+                         </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id='beer-cocktails'>
+                    <h4>Beer Cocktails</h4>
+                	<ul class="medium-block-grid-3 menu-list">
+                        {module_webapps id="Beer Cocktails" filter="classified" itemId="{{this.name}}" resultsPerPage="200" collection="beercocktails" render="collection" template=""}
+                        {% for item in beercocktails.items %}
+                        <li>
+                            <strong>{{item.name}}</strong> - ${{item.price | remove: '$' | convert: 'number'}}<br>
+                            {{item.['Short Description']}}
+                        </li>
+                        {% endfor %}
+                    </ul></div>
+                <div id='takeout-menu'>
+                    <a href="http://winkinglizard.bluefootsnapsites.com{{this.['Takeout Menu']}}" class="embed button" target="_blank">Download Takeout Menu PDF</a>
+                </div>
+                <div id='placemat'>
+                    <a href="http://winkinglizard.bluefootsnapsites.com{{this.Placemat}}" class="embed button" target="_blank">Download Placemat PDF</a>
+                </div>
+            </div>
+            <div class="medium-5 columns of-the-month">
+                <h4>Glass of the Month</h4>
+                {module_webapps id="Glass of the Month" filter="all" resultsPerPage="100" collection="glassMonth" render="collection" template=""}
+                {% for item in glassMonth.items %}
+                {module_webapps id="24324" filter="item" itemId="{{item.['Glass of the Month_id']}}" collection="glassMonthDetails" render="collection" template=""}
+                {% for item in glassMonthDetails.items %}
+                <strong>{{item.name}} - ${{item.price | remove: '$' | convert: 'number'}}</strong><br>
+                {{item.['Short Description']}}
+                {% endfor %}
+                {% endfor %}
+                
+               	<h4>Drink of the Month</h4>
+                {module_webapps id="Drink of the Month" filter="all" resultsPerPage="100" collection="drinkMonth" render="collection" template=""}
+                {% for item in drinkMonth.items %}
+                <strong>{{item.name}} - ${{item.price | remove: '$' | convert: 'number'}}</strong><br>
+                {{item.['Short Description']}}
+                {% endfor %}
+            </div>
+            <div class="medium-2 columns">
+                Lizard Image
+            </div>
+            <div class="medium-5 columns of-the-month">
+                <h4>Shot of the Month</h4>
+                {module_webapps id="Shot of the Month" filter="all" resultsPerPage="100" collection="shotMonth" render="collection" template=""}
+                {% for item in shotMonth.items %}
+                {module_webapps id="24324" filter="item" itemId="{{item.['Shot of the Month_id']}}" collection="shotMonthDetails" render="collection" template=""}
+                {% for item in shotMonthDetails.items %}
+                <strong>{{item.name}} - ${{item.price | remove: '$' | convert: 'number'}}</strong><br>
+                {{item.['Short Description']}}
+                {% endfor %}
+                {% endfor %}
+                
+               	<h4>Dessert of the Month</h4>
+                {module_webapps id="Dessert of the Month" filter="all" resultsPerPage="100" collection="dessertMonth" render="collection" template=""}
+                {% for item in dessertMonth.items %}
+                {module_webapps id="24324" filter="item" itemId="{{item.['Dessert of the Month_id']}}" collection="dessertMonthDetails" render="collection" template=""}
+                {% for item in dessertMonthDetails.items %}
+                <strong>{{item.name}} - ${{item.price | remove: '$' | convert: 'number'}}</strong><br>
+                {{item.['Short Description']}}
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

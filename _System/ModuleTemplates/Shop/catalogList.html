@@ -1,0 +1,27 @@
+<div class="shop-catalogListContainer">
+	{% if catalogs.nav.total != 0 %}
+        <ul class="shop-catalogList">
+        {% for cat in catalogs %}
+            <li>
+                {module_catalog catalogId="{{cat.id}}" template="/_System/ModuleTemplates/Shop/catalog.html"}
+            </li>
+        {% endfor %}
+        </ul>
+		<div class="shop-navigation">
+			{% if catalogs.nav.firstUrl != "" %}
+			<a class="shop-navigationFirst" href="{{catalogs.nav.firstUrl}}">First</a>
+			{% endif %}
+			{% if catalogs.nav.previousUrl != "" %}
+			<a class="shop-navigationPrevious" href="{{catalogs.nav.previousUrl}}">Previous</a>
+			{% endif %}
+			{% if catalogs.nav.nextUrl != "" %}
+			<a class="shop-navigationNext" href="{{catalogs.nav.nextUrl}}">Next</a>
+			{% endif %}
+			{% if catalogs.nav.lastUrl != "" %}
+			<a class="shop-navigationLast" href="{{catalogs.nav.lastUrl}}">Last</a>
+			{% endif %}
+		</div>
+	{% else %}
+		<h4>This catalog has no sub-catalogs.</h4>
+	{% endif %}
+</div>
